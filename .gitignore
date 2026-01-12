@@ -1,0 +1,39 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/dist/
+
+# Environment
+.env
+.env.local
+
+# Backup files
+*.backup
+
+# Test artifacts
+test-results/
+playwright-report/
+screenshots/
+videos/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test maintenance reports
+test-maintenance-report.json
+
+# Keep selector cache (team sharing)
+# Uncomment to ignore: .selector-cache.json

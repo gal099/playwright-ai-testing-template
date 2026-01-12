@@ -1,0 +1,29 @@
+{
+  "name": "playwright-ai-testing-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:codegen": "playwright codegen",
+    "test:report": "playwright show-report",
+    "ai:generate": "ts-node utils/ai-helpers/test-generator.ts",
+    "ai:maintain": "ts-node utils/ai-helpers/test-maintainer.ts",
+    "create-template": "ts-node scripts/create-template.ts"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "description": "AI-Powered Playwright Testing Framework - Template for E2E testing with Claude AI integration",
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@playwright/test": "^1.57.0",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^25.0.3",
+    "dotenv": "^17.2.3",
+    "glob": "^10.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

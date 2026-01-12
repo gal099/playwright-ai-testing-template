@@ -1,0 +1,200 @@
+# .claudeignore - Optimized for QA Automation Projects
+# This file tells Claude Code which files/folders to ignore to save tokens
+
+# ==========================================
+# Dependencies & Package Management
+# ==========================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnpm-store/
+
+# ==========================================
+# Test Results & Reports (HIGH TOKEN COST)
+# ==========================================
+# Playwright test results
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Test artifacts
+*.trace.zip
+trace-*.zip
+*.webm
+*.mp4
+videos/
+
+# HTML reports (large files)
+**/*-report.html
+**/report.html
+**/index.html
+
+# JSON results (can be very large)
+test-results/**/*.json
+results.json
+test-maintenance-report.json
+.last-run.json
+
+# ==========================================
+# Logs & Debug Files (HIGH TOKEN COST)
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+playwright-debug.log
+trace.log
+
+# ==========================================
+# Build Output & Distributions
+# ==========================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+*.tsbuildinfo
+
+# ==========================================
+# IDE & Editor Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Environment & Secrets
+# ==========================================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Secrets & credentials
+**/secrets/
+**/credentials/
+*.key
+*.pem
+*.cert
+
+# ==========================================
+# Screenshots (CONDITIONALLY IGNORE)
+# ==========================================
+# Uncomment these lines if you have many screenshots
+# and don't need Claude to analyze them constantly
+# screenshots/**/*.png
+# screenshots/**/*.jpg
+# screenshots/**/*.jpeg
+
+# Keep important reference screenshots
+!screenshots/reference/
+!screenshots/*-modal.png
+!screenshots/*-page.png
+
+# ==========================================
+# Documentation (KEEP - but exclude large files)
+# ==========================================
+# Keep most docs, but ignore if too large
+# docs/**/*.md    # Uncomment to ignore all docs
+
+# Ignore generated API docs
+docs/api/
+apidocs/
+
+# ==========================================
+# Git & Version Control
+# ==========================================
+.git/
+.gitattributes
+.gitmodules
+
+# ==========================================
+# CI/CD
+# ==========================================
+.github/workflows/
+.gitlab-ci.yml
+.circleci/
+.travis.yml
+jenkins/
+.jenkins/
+
+# ==========================================
+# Coverage & Code Quality Reports
+# ==========================================
+coverage/
+.nyc_output/
+*.lcov
+*.coverage
+htmlcov/
+.coverage
+
+# ==========================================
+# Temporary Files
+# ==========================================
+*.tmp
+*.temp
+*.bak
+*.backup
+.tmp/
+tmp/
+
+# ==========================================
+# Large Binary Files
+# ==========================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+*.exe
+*.msi
+
+# ==========================================
+# Project-Specific (Customize as needed)
+# ==========================================
+# Selector cache - usually small, keep for context
+# Uncomment to ignore:
+# .selector-cache.json
+
+# Keep test specs and utilities
+!tests/**/*.spec.ts
+!tests/**/*.test.ts
+!utils/**/*.ts
+!config/**/*.ts
+
+# ==========================================
+# Optional: Large Test Data
+# ==========================================
+# Uncomment if you have large test data files
+# fixtures/**/*.json
+# fixtures/**/*.xml
+# fixtures/**/*.csv
+# test-data/**/*
+
+# But keep small fixture files
+!fixtures/**/*.ts
+!fixtures/**/*.js
