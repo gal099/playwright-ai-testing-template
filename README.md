@@ -1,5 +1,7 @@
 # Playwright AI Testing Template
 
+> **Version 1.1.0** | [Changelog](CHANGELOG.md)
+
 An **AI-powered Playwright testing framework** that combines traditional E2E testing with Claude AI capabilities for intelligent test generation, self-healing selectors, and AI-powered assertions.
 
 ## Features
@@ -9,6 +11,7 @@ An **AI-powered Playwright testing framework** that combines traditional E2E tes
 - 🔄 **Self-Healing Selectors**: Automatically repair broken selectors using AI vision + DOM analysis
 - 🎯 **Smart Assertions**: Visual, semantic, layout, and accessibility assertions powered by AI
 - 📝 **Test Generation**: Generate tests from screenshots using AI vision
+- 📧 **OTP Authentication**: Email-based verification code extraction with AI (Mailtrap integration)
 - 🏗️ **Clean Architecture**: Organized by priority (P1/P2/P3) with helper-based patterns
 - 💰 **Cost-Optimized**: Caching and smart model selection to minimize AI API costs
 
@@ -66,10 +69,13 @@ npm run test:debug
 │   ├── ai-helpers/            # AI-powered utilities
 │   │   ├── test-generator.ts
 │   │   ├── ai-assertions.ts
-│   │   └── test-maintainer.ts
+│   │   ├── test-maintainer.ts
+│   │   └── otp-extractor.ts   # AI-powered OTP extraction
 │   ├── api/                   # Feature-specific helpers
 │   │   ├── auth-helper.ts
-│   │   └── example-helper.ts
+│   │   ├── example-helper.ts
+│   │   ├── otp-helper.ts      # OTP authentication helper
+│   │   └── email-providers/   # Email provider integrations
 │   └── selectors/
 │       └── self-healing.ts    # Auto-repair selectors
 └── CLAUDE.md                  # Project guide for Claude Code
@@ -115,6 +121,37 @@ test('AI assertions', async ({ aiPage, aiAssertions }) => {
   );
 });
 ```
+
+### OTP Authentication
+
+Extract verification codes from emails with AI:
+
+```typescript
+import { OTPHelper } from './utils/api/otp-helper';
+
+test('login with OTP', async ({ page }) => {
+  const otpHelper = OTPHelper.fromEnv();
+
+  await page.fill('[name="email"]', process.env.USER_EMAIL);
+  await page.click('button:text("Send Code")');
+
+  // Wait for email and extract OTP
+  const otpCode = await otpHelper.waitForOTP({ maxWaitMs: 30000 });
+
+  await page.fill('[name="otp"]', otpCode);
+  await page.click('button:text("Verify")');
+});
+```
+
+**Setup:**
+1. Get Mailtrap API token from [mailtrap.io/api-tokens](https://mailtrap.io/api-tokens)
+2. Add credentials to `.env`:
+   ```bash
+   MAILTRAP_API_TOKEN=your_token
+   MAILTRAP_ACCOUNT_ID=your_account_id
+   MAILTRAP_INBOX_ID=your_inbox_id
+   ```
+3. See `tests/examples/otp-auth-example.spec.ts` for complete examples
 
 ### Test Maintenance
 

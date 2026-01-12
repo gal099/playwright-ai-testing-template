@@ -102,11 +102,14 @@ P2 and P3 tests are documented but not implemented to avoid test bloat. Implemen
 **API Helpers** (`utils/api/`):
 - `auth-helper.ts`: Authentication operations
 - `example-helper.ts`: Template for feature-specific helpers
+- `otp-helper.ts`: OTP/verification code extraction from emails
+- `email-providers/`: Email provider integrations (Mailtrap, etc.)
 
 **AI Helpers** (`utils/ai-helpers/`):
 - `test-generator.ts`: Generate tests from screenshots using AI vision
 - `ai-assertions.ts`: Intelligent assertions (visual, semantic, layout, a11y)
 - `test-maintainer.ts`: Analyze and refactor test code
+- `otp-extractor.ts`: AI-powered OTP extraction from emails
 
 **Selectors** (`utils/selectors/`):
 - `self-healing.ts`: Auto-repair broken selectors using AI vision + DOM analysis
@@ -168,6 +171,47 @@ test('with self-healing', async ({ aiPage, smartLocator }) => {
 });
 ```
 
+#### 4. OTP Authentication
+
+For authentication flows requiring email-based verification codes (OTP):
+
+```typescript
+import { OTPHelper } from './utils/api/otp-helper';
+
+test('login with OTP', async ({ page }) => {
+  // Initialize from environment variables
+  const otpHelper = OTPHelper.fromEnv();
+
+  // Clear inbox before test (optional)
+  await otpHelper.clearInbox();
+
+  // Trigger OTP email
+  await page.fill('[name="email"]', process.env.USER_EMAIL);
+  await page.click('button:text("Send Code")');
+
+  // Wait for email and extract OTP (with AI or regex)
+  const otpCode = await otpHelper.waitForOTP({
+    maxWaitMs: 30000,
+    filterSubject: 'código'  // Optional filter
+  });
+
+  // Enter OTP and verify
+  await page.fill('[name="otp"]', otpCode);
+  await page.click('button:text("Verify")');
+
+  await expect(page).toHaveURL(/dashboard/);
+});
+```
+
+**Features:**
+- Supports Mailtrap (extensible to other providers)
+- AI-powered extraction (~$0.0001/OTP using Haiku)
+- Regex fallback if AI disabled
+- Polling with configurable timeout
+- Email filtering by subject/sender
+
+See `tests/examples/otp-auth-example.spec.ts` for complete examples.
+
 ## Environment Variables
 
 Required `.env` variables:
@@ -191,6 +235,12 @@ ENABLE_TEST_GENERATION=false
 # AI Configuration
 AI_MODEL=claude-3-5-sonnet-20241022
 AI_MAX_TOKENS=4096
+
+# OTP / Email Testing (optional - required for OTP authentication)
+MAILTRAP_API_TOKEN=your_token_here
+MAILTRAP_ACCOUNT_ID=your_account_id
+MAILTRAP_INBOX_ID=your_inbox_id
+ENABLE_OTP_AI_EXTRACTION=true
 ```
 
 ## Common Patterns & Gotchas
