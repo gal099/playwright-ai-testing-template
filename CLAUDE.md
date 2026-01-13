@@ -2,6 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Code Standards
+
+**IMPORTANT: All code, comments, test descriptions, and AI-generated content MUST be in English.**
+
+- **Code**: Variable names, function names, class names, interfaces, types → English
+- **Comments**: Inline comments, JSDoc, file headers → English
+- **Tests**: Test descriptions, test case IDs, assertions, helper methods → English
+- **AI generations**: When using `npm run ai:generate` or any AI helper, ensure prompts explicitly request English output
+- **Documentation**: Exception - user-facing docs can be localized, but technical/code documentation stays in English
+
+This ensures consistency and maintainability as this is a public template repository used internationally.
+
 ## Project Overview
 
 This is an **AI-Powered Playwright Testing Framework** template for E2E testing. It combines traditional Playwright testing with Claude AI capabilities for intelligent test generation, self-healing selectors, and AI-powered assertions.

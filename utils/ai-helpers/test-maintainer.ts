@@ -75,7 +75,8 @@ Provide a JSON response:
 `;
 
     const systemPrompt = `You are a senior QA automation engineer expert in Playwright and test maintenance.
-Provide specific, actionable feedback. Be thorough but practical.`;
+Provide specific, actionable feedback. Be thorough but practical.
+IMPORTANT: All issues, suggestions, and feedback must be written in English only.`;
 
     try {
       // Use Sonnet for test analysis (needs good understanding of code patterns)
@@ -130,11 +131,14 @@ Apply these improvements:
 
 Return ONLY the refactored TypeScript code, no explanations.
 Preserve all test logic and coverage.
+
+IMPORTANT: All code, comments, and test descriptions must be in English only.
 `;
 
     const systemPrompt = `You are an expert at refactoring Playwright tests.
 Output clean, maintainable code following best practices.
-Keep tests comprehensive while improving readability.`;
+Keep tests comprehensive while improving readability.
+IMPORTANT: Write all code, comments, and test descriptions in English only.`;
 
     try {
       // Use Sonnet for refactoring (needs strong code understanding)

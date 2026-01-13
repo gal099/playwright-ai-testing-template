@@ -1,6 +1,6 @@
 # Playwright AI Testing Template
 
-> **Version 1.1.0** | [Changelog](CHANGELOG.md)
+> **Version 1.2.0** | [Changelog](CHANGELOG.md)
 
 An **AI-powered Playwright testing framework** that combines traditional E2E testing with Claude AI capabilities for intelligent test generation, self-healing selectors, and AI-powered assertions.
 

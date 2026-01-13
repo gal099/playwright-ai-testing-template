@@ -57,6 +57,8 @@ Generate a complete Playwright test file that:
 5. Uses modern Playwright best practices with TypeScript
 6. Uses data-testid selectors where possible, falling back to accessible roles
 
+IMPORTANT: Write ALL code, comments, and test descriptions in ENGLISH ONLY.
+
 Return ONLY the TypeScript code for the test file, including necessary imports.
 Start with:
 import { test, expect } from '@playwright/test';
@@ -66,13 +68,22 @@ Make the tests descriptive and maintainable.
 
       const systemPrompt = `You are an expert QA automation engineer specializing in Playwright test creation.
 Generate clean, maintainable, and comprehensive test code following industry best practices.
-Focus on user-centric test scenarios and proper error handling.`;
+Focus on user-centric test scenarios and proper error handling.
+
+IMPORTANT: Generate ALL code, comments, test descriptions, and variable names in English only.
+This includes test case names, assertion messages, JSDoc comments, and any inline comments.`;
 
       // Use Sonnet for balanced quality and cost in test generation
-      const testCode = await aiClient.askWithImage(prompt, screenshotBase64, 'image/png', {
-        model: 'sonnet',
-        maxTokens: 4096
-      });
+      const testCode = await aiClient.askWithImage(
+        prompt,
+        screenshotBase64,
+        'image/png',
+        {
+          model: 'sonnet',
+          maxTokens: 4096
+        },
+        systemPrompt
+      );
 
       // Extract code from markdown if present
       const cleanedCode = this.extractCodeFromMarkdown(testCode);

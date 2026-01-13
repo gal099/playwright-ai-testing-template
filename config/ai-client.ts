@@ -78,7 +78,8 @@ export class AIClient {
     prompt: string,
     imageBase64: string,
     mediaType: 'image/png' | 'image/jpeg' | 'image/gif' | 'image/webp' = 'image/png',
-    options?: AIClientOptions
+    options?: AIClientOptions,
+    systemPrompt?: string
   ): Promise<string> {
     const modelId = this.getModelId(options?.model);
     const maxTokens = options?.maxTokens || this.defaultMaxTokens;
@@ -87,6 +88,7 @@ export class AIClient {
       const message = await this.client.messages.create({
         model: modelId,
         max_tokens: maxTokens,
+        system: systemPrompt,
         messages: [
           {
             role: 'user',

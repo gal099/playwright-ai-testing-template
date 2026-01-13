@@ -35,5 +35,8 @@ npm-debug.log*
 # Test maintenance reports
 test-maintenance-report.json
 
+# Template improvement tracking (local only)
+TODO_template.md
+
 # Keep selector cache (team sharing)
 # Uncomment to ignore: .selector-cache.json

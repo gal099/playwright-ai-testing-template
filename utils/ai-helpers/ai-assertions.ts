@@ -38,13 +38,20 @@ Be strict but reasonable in your assessment.
 `;
 
     const systemPrompt = `You are a QA visual validation expert. Analyze screenshots carefully and provide accurate assessments.
-Always respond with valid JSON only.`;
+Always respond with valid JSON only.
+IMPORTANT: Provide all explanations and messages in English only.`;
 
     // Use Sonnet for visual assertions (needs good vision capabilities)
-    const response = await aiClient.askWithImage(prompt, screenshotBase64, 'image/png', {
-      model: 'sonnet',
-      maxTokens: 2048
-    });
+    const response = await aiClient.askWithImage(
+      prompt,
+      screenshotBase64,
+      'image/png',
+      {
+        model: 'sonnet',
+        maxTokens: 2048
+      },
+      systemPrompt
+    );
 
     // Parse response
     const result = this.parseAIResponse(response);
@@ -146,11 +153,20 @@ Respond with JSON:
 }
 `;
 
+    const systemPrompt = `You are a QA visual layout expert. Analyze page layouts carefully.
+IMPORTANT: Provide all explanations and observations in English only.`;
+
     // Use Sonnet for layout analysis (needs good vision)
-    const response = await aiClient.askWithImage(prompt, screenshotBase64, 'image/png', {
-      model: 'sonnet',
-      maxTokens: 2048
-    });
+    const response = await aiClient.askWithImage(
+      prompt,
+      screenshotBase64,
+      'image/png',
+      {
+        model: 'sonnet',
+        maxTokens: 2048
+      },
+      systemPrompt
+    );
     const result = this.parseAIResponse(response);
 
     if (!result.matches) {
@@ -221,11 +237,20 @@ Respond with JSON:
 }
 `;
 
+    const systemPrompt = `You are an accessibility expert. Analyze pages for WCAG compliance and a11y best practices.
+IMPORTANT: Provide all issues, explanations, and recommendations in English only.`;
+
     // Use Sonnet for accessibility analysis (requires comprehensive understanding)
-    const response = await aiClient.askWithImage(prompt, screenshotBase64, 'image/png', {
-      model: 'sonnet',
-      maxTokens: 2048
-    });
+    const response = await aiClient.askWithImage(
+      prompt,
+      screenshotBase64,
+      'image/png',
+      {
+        model: 'sonnet',
+        maxTokens: 2048
+      },
+      systemPrompt
+    );
     const result = JSON.parse(this.extractJSON(response));
 
     if (!result.accessible && result.severity !== 'minor') {

@@ -151,10 +151,16 @@ NEW SELECTOR:`;
 Prefer data-testid, then accessible roles, then stable attributes. Avoid brittle selectors based on DOM position.`;
 
       // Use Haiku for cost-efficient selector healing
-      const response = await aiClient.askWithImage(prompt, screenshotBase64, 'image/png', {
-        model: 'haiku',
-        maxTokens: 1024
-      });
+      const response = await aiClient.askWithImage(
+        prompt,
+        screenshotBase64,
+        'image/png',
+        {
+          model: 'haiku',
+          maxTokens: 1024
+        },
+        systemPrompt
+      );
 
       // Clean the response
       const selector = response.trim().replace(/^["']|["']$/g, '');

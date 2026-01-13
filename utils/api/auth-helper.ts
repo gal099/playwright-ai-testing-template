@@ -9,17 +9,24 @@ export interface AuthToken {
 }
 
 /**
- * Helper para autenticación via API
+ * Authentication helper for API-based login operations
  */
 export class AuthHelper {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = process.env.PORTAL_URL || 'https://sima-360-portal.vercel.app';
+    if (!process.env.APP_URL) {
+      throw new Error(
+        'APP_URL must be set in .env file. ' +
+        'Please configure your application URL before running tests.'
+      );
+    }
+
+    this.baseURL = process.env.APP_URL;
   }
 
   /**
-   * Login como Organization Admin y obtener token
+   * Login as Organization Admin and retrieve authentication token
    */
   async loginAsOrgAdmin(): Promise<AuthToken> {
     const context = await request.newContext();
@@ -45,7 +52,7 @@ export class AuthHelper {
   }
 
   /**
-   * Login como Super Admin y obtener token
+   * Login as Super Admin and retrieve authentication token
    */
   async loginAsSuperAdmin(): Promise<AuthToken> {
     const context = await request.newContext();

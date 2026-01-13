@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-13
+
+### Added
+
+- **Code Standards Section**: New "Code Standards" section in `CLAUDE.md` enforcing English-only code
+  - Explicit requirement for all code, comments, tests, and AI-generated content to be in English
+  - Clear guidelines for variables, functions, JSDoc, and inline comments
+  - Exception documented for user-facing localized documentation
+
+### Fixed
+
+- **Auth Helper URL Validation**: Removed hardcoded fallback URL in `auth-helper.ts` constructor
+  - Now throws descriptive error if `APP_URL` is not configured in `.env`
+  - Prevents silent failures with incorrect URLs
+  - Improves template reusability across projects
+- **AI Client System Prompts**: Fixed `askWithImage()` method not accepting system prompts
+  - Added optional `systemPrompt` parameter to `AIClient.askWithImage()`
+  - Updated all AI helpers to properly pass system prompts
+  - Ensures AI model receives proper instructions for all vision-based operations
+
+### Changed
+
+- **Language Standardization**: Updated all code and AI prompts to enforce English output
+  - Translated Spanish comments to English in `auth-helper.ts`
+  - Updated `test-generator.ts` prompts to explicitly request English code generation
+  - Updated `ai-assertions.ts` prompts for English-only responses (visual, layout, accessibility)
+  - Updated `test-maintainer.ts` prompts for English-only analysis and suggestions
+  - Updated `self-healing.ts` to pass system prompts correctly
+- **AI Helper Improvements**: Enhanced all AI helpers with explicit English output requirements
+  - `test-generator.ts`: System prompt enforces English for all generated code
+  - `ai-assertions.ts`: All assertion methods request English explanations
+  - `test-maintainer.ts`: Analysis and refactoring produce English output
+
+### Documentation
+
+- Enhanced `CLAUDE.md` with code standards for international consistency
+- All AI-generated content will now follow English-only convention
+
 ## [1.1.0] - 2026-01-12
 
 ### Added
@@ -67,6 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.2.0**: Code standards enforcement and bug fixes
 - **1.1.0**: OTP authentication feature
 - **1.0.0**: Initial release
 
