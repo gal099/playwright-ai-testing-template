@@ -760,12 +760,80 @@ Use AI features judiciously to balance quality and cost.
   console.log();
 }
 
+async function removeFrameworkDevFiles() {
+  console.log('🗑️  Removing framework development files...\n');
+
+  const devFiles = [
+    'CLAUDE-DEV.md',
+    'new_ideas',
+    'TODO_template.md'
+  ];
+
+  for (const file of devFiles) {
+    const fullPath = path.join(ROOT, file);
+    try {
+      const stat = await fs.stat(fullPath);
+      if (stat.isDirectory()) {
+        await fs.rm(fullPath, { recursive: true, force: true });
+        console.log(`   ✓ Deleted directory: ${file}`);
+      } else {
+        await fs.unlink(fullPath);
+        console.log(`   ✓ Deleted file: ${file}`);
+      }
+    } catch (error: any) {
+      if (error.code !== 'ENOENT') {
+        console.log(`   ⚠ Could not delete ${file}: ${error.message}`);
+      }
+    }
+  }
+  console.log();
+}
+
+async function copyUserCommands() {
+  console.log('📋 Copying user commands to template...\n');
+
+  const claudeDir = path.join(ROOT, '.claude');
+  const commandsDevDir = path.join(claudeDir, 'commands-dev');
+  const commandsUserDir = path.join(claudeDir, 'commands-user');
+  const commandsDir = path.join(claudeDir, 'commands');
+
+  // Remove commands-dev (not for end users)
+  try {
+    await fs.rm(commandsDevDir, { recursive: true, force: true });
+    console.log('   ✓ Removed commands-dev/ (framework development only)');
+  } catch (error: any) {
+    if (error.code !== 'ENOENT') {
+      console.log(`   ⚠ Could not remove commands-dev/: ${error.message}`);
+    }
+  }
+
+  // Copy commands-user to commands
+  try {
+    // Remove existing commands directory if it exists
+    await fs.rm(commandsDir, { recursive: true, force: true });
+
+    // Copy commands-user to commands
+    await fs.cp(commandsUserDir, commandsDir, { recursive: true });
+    console.log('   ✓ Copied user commands to .claude/commands/');
+
+    // Remove commands-user source
+    await fs.rm(commandsUserDir, { recursive: true, force: true });
+    console.log('   ✓ Removed commands-user/ source');
+  } catch (error: any) {
+    console.log(`   ⚠ Could not copy user commands: ${error.message}`);
+  }
+
+  console.log();
+}
+
 async function main() {
   console.log('\n🚀 Playwright AI Template Generator\n');
   console.log('This script will convert your project into a clean, reusable template.\n');
 
   try {
     await deleteItems();
+    await removeFrameworkDevFiles();
+    await copyUserCommands();
     await createExampleFiles();
     await updatePackageJson();
     await updateEnvExample();
