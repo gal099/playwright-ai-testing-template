@@ -1,8 +1,9 @@
 ---
 description: Comprehensive AI review of changes in current branch before creating PR
+allowed-tools: ["Bash", "Task", "Read"]
 arguments:
   - name: base_branch
-    description: Base branch to compare against (defaults to main)
+    description: Base branch to compare against (defaults to origin/main)
     required: false
 ---
 
@@ -25,29 +26,114 @@ Performs a comprehensive AI-powered code review of all changes in your current b
 
 ---
 
-## How It Works
+## 🤖 Claude Workflow (Execute This)
 
-The review agent will:
+**When this command is invoked, follow these steps:**
 
-1. **Compare branches**: Identifies all files changed between your branch and the base branch ($ARGUMENTS or `main`)
+### Step 1: Determine Base Branch
 
-2. **Read changed files**: Analyzes the full content of each modified file
+```
+base_branch = "$ARGUMENTS" (if provided) or "origin/main" (default)
+```
 
-3. **Evaluate changes** across multiple dimensions:
-   - Code Quality: Style, patterns, maintainability
-   - Architecture: Design decisions, separation of concerns
-   - Bugs: Potential issues, edge cases, error handling
-   - Security: Vulnerabilities, input validation
-   - Performance: Inefficiencies, optimization opportunities
-   - Testing: Coverage, test quality, reliability
-   - Documentation: Comments, README, guides
+### Step 2: Get Changed Files
 
-4. **Generate report** with:
-   - Overall verdict (Ready / Needs Changes / Blocked)
-   - Critical issues (must fix before PR)
-   - Important issues (should fix before PR)
-   - Suggestions (nice-to-have improvements)
-   - Positive highlights (what you did well)
+Use Bash tool:
+```bash
+git diff --name-only {base_branch}
+```
+
+If no files changed, inform user and exit.
+
+### Step 3: Launch Review Agent
+
+Use Task tool with these parameters:
+
+**subagent_type**: `"general-purpose"`
+
+**description**: `"Comprehensive code review of branch changes"`
+
+**prompt**:
+```
+Perform comprehensive code review of changes between current branch and {base_branch}.
+
+Changed files:
+{list from step 2}
+
+Analyze across these dimensions:
+1. Code Quality: Style, patterns, maintainability, readability
+2. Architecture: Design decisions, separation of concerns, modularity
+3. Bugs: Potential issues, edge cases, error handling
+4. Security: Vulnerabilities, input validation, data exposure
+5. Performance: Inefficiencies, optimization opportunities
+6. Testing: Coverage, test quality, reliability
+7. Documentation: Comments, README updates, guides
+
+For framework development specifically, verify:
+- Follows helper-first architecture pattern
+- AI cost optimization justified (model selection, caching)
+- CLAUDE-DEV.md updated if framework behavior changes
+- Examples created in tests/examples/ for new features
+- All code and comments in English
+- Backwards compatibility maintained
+- Framework tests pass without regressions
+
+For feature/test development specifically, verify:
+- All logic in helpers, not in test files
+- Tests are independent and idempotent
+- P1 tests implemented, P2/P3 documented
+- Stable selectors used (data-testid, role, text)
+- Test coverage for critical paths
+
+Generate structured report with:
+
+## 📊 CHANGES SUMMARY
+- Files changed: X
+- Lines added: +XXX
+- Lines removed: -XXX
+
+## 📋 FILES REVIEWED
+1. path/to/file1 (+XX -XX)
+2. path/to/file2 (+XX -XX)
+
+## 🔴 CRITICAL ISSUES (Must Fix Before PR)
+[If any found, list with:]
+- Issue description
+- Location: file.ts:line
+- Fix: Specific recommendation
+
+[If none: "No critical issues found."]
+
+## 🟡 IMPORTANT ISSUES (Should Fix Before PR)
+[If any found, list with:]
+- Issue description
+- Location: file.ts:line
+- Suggestion: How to improve
+
+[If none: "No important issues found."]
+
+## 💡 SUGGESTIONS (Nice to Have)
+[If any found, list with:]
+- Enhancement description
+- Location: file.ts:line
+
+[If none: "No suggestions at this time."]
+
+## ✅ POSITIVE HIGHLIGHTS
+[What's well-done in this change:]
+- Good patterns observed
+- Strengths of the implementation
+
+## 🏁 VERDICT
+[Choose one:]
+- ✅ Ready for PR - All checks passed, no blocking issues
+- ⚠️ Needs Changes Before PR - Address critical/important issues first
+- 🔴 Blocked - Critical issues must be fixed before proceeding
+```
+
+### Step 4: Present Results
+
+After the agent completes, present the full report to the user.
 
 ---
 
@@ -83,50 +169,6 @@ git checkout feature/test-checkout
 # Address critical and important issues
 # Commit fixes
 # Create PR
-```
-
----
-
-## What to Expect
-
-### Review Report Structure
-
-```
-╔════════════════════════════════════════════╗
-║       CODE REVIEW REPORT                   ║
-╚════════════════════════════════════════════╝
-
-📊 CHANGES SUMMARY
-- Files changed: X
-- Lines added: +XXX
-- Lines removed: -XXX
-
-📋 FILES REVIEWED
-1. path/to/file1.ts (+XX -XX)
-2. path/to/file2.ts (+XX -XX)
-
-🔴 CRITICAL ISSUES (Must Fix)
-1. [Security] Issue description
-   Location: file.ts:line
-   Fix: Specific recommendation
-
-🟡 IMPORTANT ISSUES (Should Fix)
-1. [Architecture] Issue description
-   Location: file.ts:line
-   Suggestion: How to improve
-
-💡 SUGGESTIONS (Nice to Have)
-1. [Enhancement] Suggestion description
-   Location: file.ts:line
-
-✅ POSITIVE HIGHLIGHTS
-- What you did well
-- Good patterns observed
-
-🏁 VERDICT
-⚠️ Needs Changes Before PR
-✅ Ready for PR
-🔴 Blocked - Critical Issues Must Be Fixed
 ```
 
 ---
@@ -180,51 +222,6 @@ The review will check:
 
 ---
 
-## Common Issues and Fixes
-
-### Critical Issues
-
-**"Tests not included for new code"**
-- Add test coverage in tests/examples/ (framework)
-- Add P1 tests in tests/{feature}/ (features)
-
-**"Missing documentation updates"**
-- Update CLAUDE-DEV.md (framework changes)
-- Update CLAUDE.md (user-facing changes)
-- Document P2/P3 tests if applicable
-
-**"Security vulnerability detected"**
-- Fix immediately (XSS, SQL injection, command injection, etc.)
-- Follow OWASP best practices
-
-**"Breaking change without migration path"**
-- Add backwards compatibility
-- Document breaking changes clearly
-- Provide migration guide
-
-### Important Issues
-
-**"Code duplication detected"**
-- Extract to helper method
-- Create reusable utility
-
-**"Missing error handling"**
-- Add try-catch blocks
-- Handle edge cases
-- Return meaningful errors
-
-**"Tests might be flaky"**
-- Add proper waits (waitForURL, waitForSelector)
-- Remove arbitrary timeouts
-- Ensure test isolation
-
-**"Performance concern"**
-- Optimize expensive operations
-- Consider caching
-- Review AI model selection
-
----
-
 ## Best Practices
 
 ### Before Running Review
@@ -265,69 +262,13 @@ The review will check:
 
 ---
 
-## Integration with Workflow
+## Cost Information
 
-### Framework Development Workflow
-```bash
-# Phase 0-5: Implement feature
-git checkout -b framework/add-feature
+- **Estimated cost**: ~$0.25-0.35 per review (using general-purpose agent)
+- **Time**: 1-3 minutes depending on number of changed files
+- **Token usage**: ~60k-80k input tokens, ~3k output tokens
 
-# Phase 6: Local review before PR
-/review-changes
-
-# Fix issues
-# Commit fixes
-
-# Phase 7: Create PR
-gh pr create --title "..." --body "..."
-```
-
-### Feature/Test Development Workflow
-```bash
-# Implement tests
-git checkout -b feature/test-screen
-
-# Local review before PR
-/review-changes
-
-# Fix issues
-# Commit fixes
-
-# Create PR
-gh pr create --title "..." --body "..."
-```
-
----
-
-## Tips for Better Reviews
-
-### Get More Detailed Reviews
-
-The review agent automatically:
-- Reads full file contents (not just diffs)
-- Understands project context and architecture
-- Applies best practices for the framework
-
-### Handle Large Changes
-
-For very large changes (many files):
-- Consider breaking into smaller PRs
-- Review takes longer but is more thorough
-- Agent will prioritize critical issues
-
-### Iterative Reviews
-
-After fixing issues:
-```bash
-# Fix issues
-git add .
-git commit -m "fix: address review feedback"
-
-# Review again
-/review-changes
-
-# Verify issues resolved
-```
+**Cost optimization**: The agent runs in isolated context without main conversation history, making it 7x cheaper than manual review.
 
 ---
 
@@ -336,7 +277,7 @@ git commit -m "fix: address review feedback"
 - **Not a substitute for human review**: Use this as a first pass, team review is still valuable
 - **Context-dependent**: Agent has project context but may miss domain-specific concerns
 - **Time**: Review can take 1-3 minutes for large changes
-- **API Cost**: Uses Claude API (~$0.01-0.05 per review depending on changes)
+- **API Cost**: Uses Claude API (~$0.25-0.35 per review depending on changes)
 
 ---
 
@@ -349,4 +290,4 @@ git commit -m "fix: address review feedback"
 
 ---
 
-**Ready to review?** Run `/review-changes` now to get comprehensive feedback on your changes before creating a PR. Address any critical or important issues, then create your pull request with confidence.
+**Ready to review?** Run `/review-changes` now to get comprehensive feedback on your changes before creating a PR. The agent will automatically analyze your changes and provide a structured report.
