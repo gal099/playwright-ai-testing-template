@@ -1,6 +1,6 @@
 {
   "name": "playwright-ai-testing-template",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
@@ -10,6 +10,7 @@
     "test:codegen": "playwright codegen",
     "test:report": "playwright show-report",
     "ai:generate": "ts-node utils/ai-helpers/test-generator.ts",
+    "ai:plan-tests": "ts-node utils/ai-helpers/test-case-planner.ts",
     "ai:maintain": "ts-node utils/ai-helpers/test-maintainer.ts",
     "create-template": "ts-node scripts/create-template.ts"
   },

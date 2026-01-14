@@ -9,7 +9,8 @@
       "Bash(npm test:*)",
       "Bash(npx playwright codegen:*)",
       "Bash(npx ts-node:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

@@ -41,6 +41,28 @@ maxTokens: 4096
 
 **Estimated cost:** ~$0.05-0.15 per generated test
 
+### Test Case Planning → **Sonnet**
+```typescript
+// utils/ai-helpers/test-case-planner.ts
+model: 'sonnet'
+maxTokens: 4096
+```
+**Reason:** Requires AI vision to analyze screenshots and generate comprehensive test documentation. Similar to test generation but outputs structured documentation instead of code.
+
+**Use Case:** Generate manual test case documentation from screenshots before automation. Ideal for:
+- Identifying all test scenarios without logging into systems
+- Planning and prioritizing test coverage (P1/P2/P3)
+- Creating test documentation for team review
+- Deciding which tests to automate vs. document
+
+**Estimated cost:** ~$0.05-0.15 per analysis (similar to test generation)
+
+**Benefits:**
+- Faster test planning without system access
+- Better prioritization before automation
+- Complete test documentation (P1 automated, P2/P3 documented)
+- Team can review test cases before code is written
+
 ### AI Assertions
 
 #### Visual State → **Sonnet**
