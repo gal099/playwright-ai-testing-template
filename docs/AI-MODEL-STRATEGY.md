@@ -8,16 +8,19 @@ This document explains how different Claude models are used to optimize costs an
 - **Cost:** Low (~$0.00025 / 1K tokens input, ~$0.00125 / 1K tokens output)
 - **Speed:** Fast
 - **Use:** Simple text tasks and basic analysis
+- **Note:** Claude 3 Haiku (latest stable version)
 
-### Sonnet (claude-3-5-sonnet-20241022)
+### Sonnet (claude-sonnet-4-5-20250929)
 - **Cost:** Medium (~$0.003 / 1K tokens input, ~$0.015 / 1K tokens output)
 - **Speed:** Moderate
 - **Use:** Balance between quality and cost, AI vision
+- **Note:** Claude Sonnet 4.5 (latest version, upgraded from 3.5)
 
-### Opus (claude-3-opus-20240229)
+### Opus (claude-opus-4-5-20251101)
 - **Cost:** High (~$0.015 / 1K tokens input, ~$0.075 / 1K tokens output)
 - **Speed:** Slower
 - **Use:** Complex cases requiring maximum capability
+- **Note:** Claude Opus 4.5 (latest version, upgraded from 3)
 
 ## Feature Assignment
 

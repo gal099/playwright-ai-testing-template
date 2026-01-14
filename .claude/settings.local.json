@@ -23,7 +23,10 @@
       "Bash(git merge:*)",
       "Bash(gh pr:*)",
       "Bash(git tag:*)",
-      "Bash(gh release:*)"
+      "Bash(gh release:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

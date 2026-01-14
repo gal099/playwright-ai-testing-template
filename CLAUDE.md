@@ -334,7 +334,7 @@ ENABLE_AI_ASSERTIONS=true
 ENABLE_TEST_GENERATION=false
 
 # AI Configuration
-AI_MODEL=claude-3-5-sonnet-20241022
+AI_MODEL=claude-sonnet-4-5-20250929
 AI_MAX_TOKENS=4096
 
 # OTP / Email Testing (optional - required for OTP authentication)
