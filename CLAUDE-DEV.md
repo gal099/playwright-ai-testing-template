@@ -127,6 +127,7 @@ fixtures/
 utils/
 ├── ai-helpers/
 │   ├── test-generator.ts     # Generate tests from screenshots
+│   ├── test-case-planner.ts  # Generate test case documentation (NEW)
 │   ├── ai-assertions.ts      # Visual, semantic, layout assertions
 │   ├── test-maintainer.ts    # Analyze and refactor test code
 │   └── otp-extractor.ts      # AI-powered OTP extraction

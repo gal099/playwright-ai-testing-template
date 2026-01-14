@@ -149,8 +149,11 @@ npx playwright test --project=chromium
 ### AI Features
 
 ```bash
-# Generate tests from URL (uses AI vision)
+# Generate test CODE from URL (uses AI vision)
 npm run ai:generate <url> [description]
+
+# Generate test DOCUMENTATION from screenshot (plan before automating)
+npm run ai:plan-tests <url-or-screenshot> <screen-name>
 
 # Analyze test suite quality
 npm run ai:maintain analyze
@@ -426,9 +429,62 @@ The framework is **hybrid** - works with or without AI features:
 
 - **Traditional Playwright**: Always available, no API key needed
 - **AI Features**: Optional, require `ANTHROPIC_API_KEY`
+  - Test case planning: `npm run ai:plan-tests` (NEW)
   - Test generation: `npm run ai:generate`
   - Self-healing: `import { test } from './fixtures/ai-fixtures'`
   - AI assertions: Use `aiAssertions` fixture
   - Maintenance: `npm run ai:maintain`
 
 Use AI features judiciously to balance quality and cost.
+
+### Test Case Planning (NEW)
+
+**Problem:** You need to identify all test scenarios before automating, but you don't have access to the system or it's time-consuming to explore manually.
+
+**Solution:** Use Test Case Planner to generate manual test documentation from screenshots.
+
+```bash
+# From URL (captures screenshot automatically)
+npm run ai:plan-tests http://localhost:3000/login login
+
+# From existing screenshot
+npm run ai:plan-tests screenshots/dashboard.png dashboard
+```
+
+**What it generates:**
+- Comprehensive test case documentation in Markdown
+- Test scenarios grouped logically
+- Test cases with IDs (TC-XX-001, TC-XX-002, ...)
+- Priorities (P1/P2/P3) with recommendations
+- Preconditions, steps, expected results
+- Automation recommendations
+
+**Output:** `docs/{SCREEN}-TEST-CASES.md`
+
+**Benefits:**
+- ✅ Identify ALL test scenarios without logging into system
+- ✅ Better test planning and prioritization
+- ✅ Team can review test cases before writing code
+- ✅ P1 tests automated, P2/P3 documented for future
+- ✅ Faster than manual test case writing
+
+**Workflow:**
+```bash
+# Step 1: Generate test case documentation
+npm run ai:plan-tests http://localhost:3000/login login
+# Output: docs/LOGIN-TEST-CASES.md (with TC-LG-001 to TC-LG-010)
+
+# Step 2: Review and prioritize with team
+# Adjust priorities, add missing scenarios
+
+# Step 3: Automate P1 tests using /new-screen
+/new-screen login
+# Creates: tests/login/login-p1.spec.ts (automates TC-LG-001 to TC-LG-004)
+
+# Step 4: Document P2/P3 tests
+# Keep TC-LG-005 to TC-LG-010 in docs/LOGIN-P2-P3-TESTS.md
+```
+
+**Cost:** ~$0.05-0.15 per analysis (same as test generation)
+
+See `docs/EXAMPLE-TEST-CASE-PLANNING.md` for detailed example output.

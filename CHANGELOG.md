@@ -5,6 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-01-14
+
+### Added
+
+- **Test Case Planner**: AI-powered feature to generate manual test case documentation from screenshots
+  - New command: `npm run ai:plan-tests <url-or-screenshot> <screen-name>`
+  - Location: `utils/ai-helpers/test-case-planner.ts`
+  - Analyzes UI screenshots and identifies comprehensive test scenarios
+  - Generates structured test documentation with:
+    - Test case IDs (TC-XX-001, TC-XX-002, etc.)
+    - Priorities (P1/P2/P3) based on criticality and risk
+    - Preconditions, steps, and expected results
+    - Automation recommendations
+    - Summary with breakdown by priority
+  - Output: `docs/{SCREEN}-TEST-CASES.md` in Markdown format
+  - Model: Sonnet (~$0.05-0.15 per analysis)
+
+**Use Case:** Generate comprehensive test documentation BEFORE automation. Ideal for:
+- Identifying all test scenarios without logging into systems
+- Planning and prioritizing test coverage with team
+- Reviewing test cases before writing automation code
+- Deciding which tests to automate (P1) vs. document (P2/P3)
+- Faster test planning than manual documentation
+
+**Workflow Integration:**
+1. Generate test docs: `npm run ai:plan-tests http://localhost:3000/login login`
+2. Review and adjust priorities with team
+3. Automate P1 tests: `/new-screen login`
+4. Keep P2/P3 tests documented for future implementation
+
+**Benefits:**
+- Comprehensive test coverage identification
+- Better prioritization before coding
+- Team collaboration on test strategy
+- Reduced waste (only automate critical tests)
+- Faster than manual test case writing
+
+### Documentation
+
+- **docs/EXAMPLE-TEST-CASE-PLANNING.md**: Complete example of generated test documentation (400+ lines)
+  - Shows realistic login screen test case analysis
+  - Demonstrates P1/P2/P3 prioritization
+  - Includes 10 test cases with full details
+  - Workflow integration examples
+- **docs/AI-MODEL-STRATEGY.md**: Added Test Case Planning cost analysis
+  - Use case explanation
+  - Cost estimation
+  - Benefits and workflow
+- **CLAUDE.md**: Added Test Case Planning section
+  - Feature overview and benefits
+  - Usage examples (URL and screenshot)
+  - Complete workflow with /new-screen integration
+  - Cost information
+- **CLAUDE-DEV.md**: Updated AI helpers list
+  - Added test-case-planner.ts to framework code inventory
+
+### Scripts
+
+- **package.json**: Added `ai:plan-tests` npm script
+  - Command: `npm run ai:plan-tests`
+  - Accepts URL or screenshot path + screen name
+  - Integrates with existing AI features
+
 ## [1.3.0] - 2026-01-13
 
 ### Added
@@ -163,6 +226,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.4.0**: Test case planner for manual test documentation
 - **1.3.0**: Two-level command system and AI-powered code review
 - **1.2.0**: Code standards enforcement and bug fixes
 - **1.1.0**: OTP authentication feature
