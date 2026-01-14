@@ -1,6 +1,6 @@
 # Playwright AI Testing Template
 
-> **Version 1.2.0** | [Changelog](CHANGELOG.md)
+> **Version 1.3.0** | [Changelog](CHANGELOG.md)
 
 An **AI-powered Playwright testing framework** that combines traditional E2E testing with Claude AI capabilities for intelligent test generation, self-healing selectors, and AI-powered assertions.
 
@@ -12,6 +12,8 @@ An **AI-powered Playwright testing framework** that combines traditional E2E tes
 - 🎯 **Smart Assertions**: Visual, semantic, layout, and accessibility assertions powered by AI
 - 📝 **Test Generation**: Generate tests from screenshots using AI vision
 - 📧 **OTP Authentication**: Email-based verification code extraction with AI (Mailtrap integration)
+- 🤖 **Claude Code Commands**: Structured workflows for test automation and framework development
+- 🔍 **AI Code Review**: Pre-PR review with actionable feedback and severity levels
 - 🏗️ **Clean Architecture**: Organized by priority (P1/P2/P3) with helper-based patterns
 - 💰 **Cost-Optimized**: Caching and smart model selection to minimize AI API costs
 
@@ -51,6 +53,32 @@ npm run test:ui
 # Debug tests
 npm run test:debug
 ```
+
+## Claude Code Commands
+
+When working with [Claude Code](https://claude.ai/code), use these commands for efficient test automation:
+
+- **`/new-screen <screen_name>`** - Create tests for a new screen/feature
+  - Guides through UI exploration with codegen
+  - Creates helper and test files with best practices
+  - Implements P1 tests, documents P2/P3
+
+- **`/fix-test [test_name]`** - Debug and fix failing tests
+  - Reproduces and diagnoses failures
+  - Fixes in helper (not test file)
+  - Ensures all tests pass before commit
+
+- **`/add-coverage <feature_name>`** - Add more test coverage
+  - Reviews existing tests and docs
+  - Implements selected P2/P3 tests as P1
+  - Updates documentation
+
+- **`/review-changes [base_branch]`** - AI code review before PR
+  - Analyzes all changed files
+  - Reviews quality, tests, documentation
+  - Provides actionable feedback
+
+See `CLAUDE.md` for detailed command documentation.
 
 ## Project Structure
 
