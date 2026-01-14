@@ -39,13 +39,13 @@ Follow this structured workflow strictly. **Do not skip phases.**
 
 2. **Create and checkout a fix branch**:
    ```bash
-   git checkout -b fix/test-name-or-issue
+   git checkout -b fix/description-of-issue
    ```
 
    **Branch naming convention:**
    - Use `fix/` prefix
    - Use kebab-case
-   - Be descriptive
+   - Be descriptive but concise
    - Examples:
      - `fix/login-button-selector`
      - `fix/dashboard-timing-issue`

@@ -1,5 +1,9 @@
 # Framework Development Guide
 
+> **⚠️ SOURCE REPOSITORY ONLY**: This file exists only in the framework source repository.
+> When you run `npm run create-template`, this file is automatically removed from the generated template.
+> End users of the template will only see `CLAUDE.md`, which contains usage instructions.
+
 **You are working ON the framework, improving it for future users.**
 
 This guide is for developers working on the Playwright AI Testing Framework itself, not for QA testers using the framework to test applications. If you're a QA tester using this framework for your project, see `CLAUDE.md` instead.

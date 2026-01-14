@@ -807,6 +807,15 @@ async function copyUserCommands() {
     }
   }
 
+  // Check if commands-user exists before copying
+  try {
+    await fs.access(commandsUserDir);
+  } catch (error) {
+    console.log('   ⚠ commands-user/ not found - skipping command copy');
+    console.log();
+    return;
+  }
+
   // Copy commands-user to commands
   try {
     // Remove existing commands directory if it exists
@@ -829,6 +838,15 @@ async function copyUserCommands() {
 async function main() {
   console.log('\n🚀 Playwright AI Template Generator\n');
   console.log('This script will convert your project into a clean, reusable template.\n');
+
+  // Pre-flight validation: ensure we're in the project root
+  try {
+    await fs.access(path.join(ROOT, 'package.json'));
+    await fs.access(path.join(ROOT, 'playwright.config.ts'));
+  } catch (error) {
+    console.error('❌ Error: Must run from project root (package.json and playwright.config.ts must exist)');
+    process.exit(1);
+  }
 
   try {
     await deleteItems();
