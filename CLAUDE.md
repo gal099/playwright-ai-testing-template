@@ -20,6 +20,92 @@ This is an **AI-Powered Playwright Testing Framework** template for E2E testing.
 
 **To use this template**: Configure `.env` with your application URL and credentials, then start writing tests!
 
+---
+
+## 🤖 Claude Code Commands
+
+These commands help you work efficiently with the framework:
+
+### `/new-screen <screen_name>`
+Automate tests for a new screen or feature.
+
+**When to use:** Starting to test a new page, screen, or feature area.
+
+**What it does:**
+- Guides you through exploring the UI with codegen
+- Helps create helper file with best practices
+- Creates test file and P2/P3 documentation
+- Implements P1 tests only (critical path)
+- Ensures helper-first approach
+
+**Example:**
+```
+/new-screen "login page"
+```
+
+---
+
+### `/fix-test [test_name]`
+Fix a failing test.
+
+**When to use:** A test is failing and you need to debug and fix it.
+
+**What it does:**
+- Helps reproduce and diagnose the failure
+- Identifies common issues (selector, timing, assertion, auth)
+- Guides you through fixing in helper (not test)
+- Ensures all tests pass before committing
+
+**Example:**
+```
+/fix-test "TC-LG-001"
+```
+
+---
+
+### `/add-coverage <feature_name>`
+Add more test coverage to an existing feature.
+
+**When to use:** You have existing tests and want to add more coverage.
+
+**What it does:**
+- Reviews existing tests and P2/P3 documentation
+- Helps select which tests to implement
+- Extends existing helper with new methods
+- Updates P2/P3 docs to mark implemented tests
+
+**Example:**
+```
+/add-coverage "login"
+```
+
+---
+
+### `/review-changes [base_branch]`
+Get comprehensive AI review before creating PR.
+
+**When to use:** Before creating a pull request to get feedback on your changes.
+
+**What it does:**
+- Analyzes all files changed in your branch
+- Reviews code quality, test coverage, and documentation
+- Checks for common issues and best practices
+- Provides actionable feedback with severity levels
+- Reports: Ready for PR / Needs Changes / Blocked
+
+**Example:**
+```
+/review-changes
+/review-changes main
+```
+
+**When to run:**
+- After all tests pass (`npm test`)
+- Before creating pull request
+- After addressing previous review feedback
+
+---
+
 ## Commands Reference
 
 ### Running Tests
@@ -311,7 +397,7 @@ Keep screenshots visible by default (may be needed for AI analysis).
 
 ## Adding New Test Areas
 
-When testing a new screen/feature:
+When testing a new screen/feature, use the `/new-screen` command for guided workflow, or follow these steps manually:
 
 1. **Explore the UI first**:
    ```bash
@@ -332,7 +418,7 @@ When testing a new screen/feature:
 
 5. **Document P2/P3 tests** in `docs/{FEATURE}-P2-P3-TESTS.md`
 
-6. **Update this CLAUDE.md** if introducing new patterns
+**Tip:** The `/new-screen <screen_name>` command automates this entire workflow for you.
 
 ## AI Feature Toggles
 

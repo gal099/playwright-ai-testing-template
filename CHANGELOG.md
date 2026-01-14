@@ -5,6 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-01-13
+
+### Added
+
+- **Two-Level Command System**: Separate commands for framework development vs. framework usage
+  - `.claude/commands-dev/`: Commands for developers working ON the framework
+    - `/improve-framework`: Add new features to framework code
+    - `/fix-framework`: Fix bugs in framework code
+    - `/review-changes`: AI-powered code review before PR
+  - `.claude/commands-user/`: Commands for QA testers using the framework
+    - `/new-screen`: Automate tests for new screens/features
+    - `/fix-test`: Debug and fix failing tests
+    - `/add-coverage`: Add more coverage to existing features
+    - `/review-changes`: AI-powered code review before PR
+- **CLAUDE-DEV.md**: Comprehensive guide for framework developers
+  - What is framework code vs. user code
+  - Framework development workflows
+  - Git branching strategy (framework/* branches)
+  - When to update template with `npm run create-template`
+  - Cost optimization guidelines
+  - Documentation requirements
+- **AI-Powered Code Review Command**: `/review-changes [base_branch]`
+  - Comprehensive analysis of all changed files
+  - Reviews code quality, architecture, bugs, security, tests, documentation
+  - Severity levels: Critical / Important / Suggestions
+  - Verdict: Ready for PR / Needs Changes / Blocked
+  - Available for both framework and feature development
+- **Template Script Enhancements**: `scripts/create-template.ts`
+  - `removeFrameworkDevFiles()`: Removes framework dev files from template
+  - `copyUserCommands()`: Copies user commands to `.claude/commands/`
+  - Pre-flight validation to ensure script runs from project root
+  - Directory existence checks for graceful error handling
+
+### Fixed
+
+- **Script Validation**: Added pre-flight checks in `create-template.ts` to verify package.json and playwright.config.ts exist
+- **Directory Safety**: Added existence checks in `copyUserCommands()` to handle missing directories gracefully
+- **Branch Naming Consistency**: Standardized fix branch naming to `fix/description-of-issue` in fix-test.md
+- **Circular Reference**: Clarified CLAUDE-DEV.md is source-only and removed from template
+
+### Documentation
+
+- **CLAUDE-DEV.md**: Complete framework development guide with command documentation
+- **CLAUDE.md**: Updated with user commands and `/review-changes` documentation
+- **Command Files**: Comprehensive 400-500 line command workflows with:
+  - Phase-by-phase structured approach
+  - "Think hard" reminders before coding
+  - Mandatory test validation before commits
+  - Project-specific constraints and best practices
+  - Common scenarios and troubleshooting
+
+### Architecture
+
+- **Clear Separation**: Framework development (working ON) vs. framework usage (working WITH)
+- **Template Generation**: Framework dev files automatically removed when creating template
+- **Command Organization**: Hierarchical command structure for different user roles
+- **Git Workflow**: Distinct branching strategies for framework vs. feature work
+
 ## [1.2.0] - 2026-01-13
 
 ### Added
@@ -105,6 +163,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **1.3.0**: Two-level command system and AI-powered code review
 - **1.2.0**: Code standards enforcement and bug fixes
 - **1.1.0**: OTP authentication feature
 - **1.0.0**: Initial release
