@@ -21,7 +21,9 @@
       "Bash(git checkout:*)",
       "Bash(git restore:*)",
       "Bash(git merge:*)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(git tag:*)",
+      "Bash(gh release:*)"
     ],
     "deny": [],
     "ask": []
