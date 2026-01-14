@@ -1,6 +1,6 @@
 # Playwright AI Testing Framework
 
-> **Version 1.5.0** | [Changelog](CHANGELOG.md)
+> **Version 1.5.1** | [Changelog](CHANGELOG.md)
 
 A testing framework that serves as both a development platform and a reusable template for E2E testing with Claude AI integration. Combines traditional Playwright testing with AI capabilities for intelligent test generation, self-healing selectors, and AI-powered assertions.
 

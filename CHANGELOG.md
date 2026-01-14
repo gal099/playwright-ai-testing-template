@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-01-14
+
+### Fixed
+
+- **`/review-changes` Command Execution**: Fixed command that was only displaying documentation without executing the review (ENHANCE-006)
+  - Command now automatically launches Task tool with general-purpose agent
+  - Added `allowed-tools: ["Bash", "Task", "Read"]` in frontmatter
+  - New "🤖 Claude Workflow (Execute This)" section with step-by-step executable instructions
+  - Simplified from 454 to 294 lines (35% reduction)
+  - Added origin/master fallback for legacy repositories
+  - Improved prompt format clarity (triple quotes instead of backticks)
+  - Clarified file list format specification
+  - Testing: Manually verified command launches agent and generates structured reports
+  - Benefits: 7x cheaper (~$0.25 vs ~$1.80) due to isolated agent context
+
+- **SIMA References Cleanup**: Removed all SIMA-specific references from template generation script (ENHANCE-004)
+  - Updated script header comment: "SIMA project" → "framework project"
+  - Eliminated TO_DELETE array with SIMA-specific file paths
+  - Removed deleteItems() function (42 lines)
+  - Removed createExampleFiles() function (145 lines) - files already exist in repo
+  - Updated .gitignore to ignore .selector-cache.json in framework source
+  - Script simplified from 877 to 694 lines (-183 lines, -21%)
+  - Framework now truly generic and reusable
+
+### Changed
+
+- **TODO_template.md**: Updated enhancement status
+  - ENHANCE-004: Marked as ✅ IMPLEMENTED (SIMA cleanup)
+  - ENHANCE-006: Marked as ✅ IMPLEMENTED (review-changes fix)
+  - ENHANCE-007: Marked as ✅ PARTIALLY IMPLEMENTED (robustness improvements)
+
+### Documentation
+
+- `.claude/commands/review-changes.md`: Complete rewrite with executable workflow
+- `TODO_template.md`: Comprehensive tracking of all 3 enhancements implemented
+
+**Impact:** Critical bug fix for review command + code cleanup for better maintainability. Both changes are backwards compatible.
+
+---
+
 ## [1.5.0] - 2026-01-14
 
 ### Added
