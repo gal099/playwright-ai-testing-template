@@ -4,17 +4,31 @@ Initialize the framework for YOUR project (template usage mode).
 
 ---
 
+📦 **TWO-REPO STRUCTURE**
+
+This framework has two separate repositories:
+- **Template Repo** (for end users): `playwright-ai-testing-template` - Use this for YOUR tests
+- **Dev Repo** (for framework developers): `playwright-ai-testing-framework` - Framework development only
+
+**Make sure you cloned the TEMPLATE repo**:
+```bash
+git clone git@github.com:gal099/playwright-ai-testing-template.git
+```
+
+---
+
 ⚠️ **WARNING: DESTRUCTIVE OPERATION**
 
 This command will **DELETE your git history** (`rm -rf .git`) and create a fresh repository. This is intentional for starting a new project with clean history.
 
 **✅ Use this command if:**
-- You just cloned the framework to test YOUR application
+- You cloned the **template repo** to test YOUR application
 - You want to start with a clean git history (no framework commits)
 - You're setting up the framework for the first time as a template user
 
 **❌ DO NOT use this command if:**
 - You're working on the framework itself (use `/start-dev` instead)
+- You cloned the **dev repo** by mistake (clone template repo instead)
 - You have existing commits you want to preserve
 - You're working on an active project with important git history
 
@@ -29,30 +43,43 @@ Read these files to understand the framework:
 
 ## Read and Execute
 
-Check if framework needs to be converted to template mode:
-- If `CLAUDE-DEV.md` exists → Run `npm run create-template` first
-- If `CLAUDE-DEV.md` does NOT exist → Already in template mode, skip conversion
+**CRITICAL: Verify you're in the correct repository**
+
+Check if `CLAUDE-DEV.md` exists:
+- If it **DOES NOT exist** → ✅ Correct repo (template), proceed with setup
+- If it **EXISTS** → ❌ Wrong repo (dev repo), **STOP and inform user**
+
+If `CLAUDE-DEV.md` exists, show this error and exit:
+
+```
+❌ ERROR: You're in the DEVELOPMENT repository!
+
+This is the framework development repo, not the template for end users.
+
+To use this framework for YOUR tests, clone the template repository:
+
+  git clone git@github.com:gal099/playwright-ai-testing-template.git
+
+Then run /start-user from the template repo.
+
+If you want to work ON the framework itself, use /start-dev instead.
+```
 
 ## Run
 
 Execute the following steps in sequence (fully automated, no user prompts):
 
-1. **Convert to template mode** (if CLAUDE-DEV.md exists):
-   ```bash
-   npm run create-template
-   ```
-
-2. **Install all dependencies**:
+1. **Install all dependencies**:
    ```bash
    npm install
    ```
 
-3. **Create .env file from template**:
+2. **Create .env file from template**:
    ```bash
    cp .env.example .env
    ```
 
-4. **Clean git repository** (start fresh for user's project):
+3. **Clean git repository** (start fresh for user's project):
    ```bash
    rm -rf .git
    git init
@@ -62,7 +89,7 @@ Execute the following steps in sequence (fully automated, no user prompts):
    Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
    ```
 
-5. **Run health check** (verify setup works):
+4. **Run health check** (verify setup works):
    ```bash
    npm test tests/examples/
    ```
@@ -76,7 +103,7 @@ After completing setup, provide this output:
 ✅ **Framework Setup Complete!**
 
 **What was done:**
-- [✓] Framework converted to Template Mode / Already in template mode
+- [✓] Verified correct repository (template repo)
 - [✓] All dependencies installed
 - [✓] .env file created from .env.example
 - [✓] Git repository initialized (clean history)
